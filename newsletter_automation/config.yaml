@@ -1,0 +1,62 @@
+# Newsletter Automation Configuration
+
+# ─── Email Settings ───────────────────────────────────────────────────────────
+email:
+  # Gmail account used to SEND the daily digest
+  sender_email: "pallavi@unicornivc.com"
+  recipient_email: "pallavi@unicornivc.com"
+
+  # Newsletter source inbox (the other email where newsletters arrive)
+  # Supports Gmail (imap.gmail.com) or Outlook (outlook.office365.com)
+  newsletter_inbox:
+    enabled: true
+    imap_host: "imap.gmail.com"          # Change to outlook.office365.com for Outlook
+    imap_port: 993
+    email: "your-newsletter-inbox@gmail.com"  # The email that receives newsletters
+    # Look for newsletters from these senders (leave empty to fetch all unread)
+    filter_senders: []
+    # Or filter by subject keywords
+    filter_subject_keywords: []
+
+# ─── RSS Feeds ────────────────────────────────────────────────────────────────
+rss_feeds:
+  enabled: true
+  feeds:
+    # Add your RSS feed URLs here, for example:
+    # - name: "TechCrunch"
+    #   url: "https://techcrunch.com/feed/"
+    # - name: "Harvard Business Review"
+    #   url: "https://feeds.hbr.org/harvardbusiness"
+    # - name: "Morning Brew"
+    #   url: "https://www.morningbrew.com/daily/rss"
+    []
+
+# ─── Website URLs to scrape ───────────────────────────────────────────────────
+websites:
+  enabled: true
+  urls:
+    # Add specific newsletter/article URLs to scrape daily, for example:
+    # - name: "Stratechery"
+    #   url: "https://stratechery.com"
+    # - name: "Benedict Evans"
+    #   url: "https://www.ben-evans.com"
+    []
+
+# ─── AI Insights Settings ─────────────────────────────────────────────────────
+insights:
+  # Max number of newsletters to process per run (to manage API costs)
+  max_items: 10
+  # What kind of insights to extract
+  focus: |
+    Extract the most valuable business and investment insights. Focus on:
+    - Key trends and market movements
+    - Notable company news and funding rounds
+    - Strategic insights relevant to venture capital
+    - Actionable takeaways
+
+# ─── Scheduler Settings ───────────────────────────────────────────────────────
+scheduler:
+  # Time to send the daily digest (24-hour format)
+  send_time: "10:00"
+  # Timezone for the scheduled time
+  timezone: "Asia/Kolkata"   # IST
