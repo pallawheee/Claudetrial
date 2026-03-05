@@ -69,7 +69,7 @@ def run_pipeline(config: dict) -> None:
     # ── Step 2: Filter for deeptech relevance ────────────────────────
     filter_cfg = config.get("filter", {})
     if filter_cfg.get("deeptech_only", False):
-        keywords = filter_cfg.get("keywords", DEEPTECH_KEYWORDS)
+        keywords = filter_cfg.get("keywords") or DEEPTECH_KEYWORDS
         before = len(all_items)
         all_items = [item for item in all_items if _is_deeptech(item, keywords)]
         print(f"[main] Deeptech filter: {before} → {len(all_items)} items")
