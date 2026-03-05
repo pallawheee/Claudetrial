@@ -42,10 +42,17 @@ websites:
     #   url: "https://www.ben-evans.com"
     []
 
+# ─── Deeptech Filter ──────────────────────────────────────────────────────────
+filter:
+  # Only include newsletters that mention deeptech topics
+  deeptech_only: true
+  # Optional: override the default keyword list (leave empty to use defaults)
+  keywords: []
+
 # ─── AI Insights Settings ─────────────────────────────────────────────────────
 insights:
-  # Max number of newsletters to process per run (to manage API costs)
-  max_items: 10
+  # Max number of newsletters to process per run
+  max_items: 100
   # What kind of insights to extract
   focus: |
     Extract the most valuable business and investment insights. Focus on:

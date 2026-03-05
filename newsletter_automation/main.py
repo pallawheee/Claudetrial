@@ -12,6 +12,22 @@ import os
 import sys
 import time
 
+DEEPTECH_KEYWORDS = [
+    "deep tech", "deeptech", "ai", "artificial intelligence", "machine learning",
+    "deep learning", "robotics", "biotech", "biotechnology", "quantum", "semiconductor",
+    "chip", "hardware", "space tech", "cleantech", "climate tech", "nanotech",
+    "autonomous", "drone", "synthetic biology", "genomics", "crispr", "medtech",
+    "healthtech", "cybersecurity", "blockchain", "photonics", "materials science",
+    "fusion", "battery", "energy storage", "compute", "gpu", "llm", "foundation model",
+]
+
+
+def _is_deeptech(item: dict, keywords: list[str]) -> bool:
+    text = (
+        (item.get("title") or "") + " " + (item.get("content") or "")
+    ).lower()
+    return any(kw in text for kw in keywords)
+
 import schedule
 import yaml
 from dotenv import load_dotenv
@@ -50,10 +66,18 @@ def run_pipeline(config: dict) -> None:
     if not all_items:
         print("[main] No newsletter content found. Check your sources in config.yaml.")
 
-    # ── Step 2: Generate AI insights ─────────────────────────────────
+    # ── Step 2: Filter for deeptech relevance ────────────────────────
+    filter_cfg = config.get("filter", {})
+    if filter_cfg.get("deeptech_only", False):
+        keywords = filter_cfg.get("keywords", DEEPTECH_KEYWORDS)
+        before = len(all_items)
+        all_items = [item for item in all_items if _is_deeptech(item, keywords)]
+        print(f"[main] Deeptech filter: {before} → {len(all_items)} items")
+
+    # ── Step 3: Generate AI insights ─────────────────────────────────
     insights_cfg = config.get("insights", {})
     focus = insights_cfg.get("focus", "Extract the key insights from this newsletter.")
-    max_items = insights_cfg.get("max_items", 10)
+    max_items = insights_cfg.get("max_items", 100)
 
     processed = generate_insights(all_items, focus=focus, max_items=max_items)
 
